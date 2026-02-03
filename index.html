@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dilip Kumar Yadav | Principal AI Architect & Technical Founder</title>
+    <meta name="description" content="Principal AI Engineer with cross-domain expertise in BFSI, Healthcare, Logistics, Agriculture, and Manufacturing. Architecting enterprise-grade intelligent systems.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        body {
+            background-color: #0a0e17;
+            color: #e2e8f0;
+            overflow-x: hidden;
+            cursor: none;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Custom Cursor */
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .cursor-dot { width: 5px; height: 5px; background: #00f0ff; }
+        .cursor-outline {
+            width: 30px; height: 30px;
+            border: 2px solid rgba(0, 240, 255, 0.5);
+            transition: all 0.2s;
+        }
+        .cursor-outline.hover {
+            width: 60px; height: 60px;
+            background: rgba(0, 240, 255, 0.1);
+            border-color: transparent;
+        }
+
+        /* Background */
+        #canvas-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+        }
+
+        .domain-card {
+            transition: all 0.3s ease;
+        }
+        .domain-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(0, 240, 255, 0.3);
+            border-color: rgba(0, 240, 255, 0.5);
+        }
+
+        .deep-dive {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0, 1, 0, 1);
+        }
+        .deep-dive.active {
+            max-height: 5000px;
+            transition: max-height 0.6s ease-in-out;
+        }
+
+        .flow-line {
+            stroke-dasharray: 5,5;
+            animation: flow 1s linear infinite;
+        }
+        @keyframes flow { to { stroke-dashoffset: -10; } }
+
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .metric-badge {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(255, 0, 122, 0.1));
+            border: 1px solid rgba(0, 240, 255, 0.3);
+        }
+
+        .arch-diagram {
+            width: 100%;
+            height: 100%;
+            min-height: 200px;
+        }
+        
+        .text-wrap-balance {
+            text-wrap: balance;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+        
+        .project-content {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+
+    <!-- Neural Background -->
+    <div id="canvas-container"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded bg-gradient-to-br from-cyan-400 to-pink-500 flex items-center justify-center font-bold text-black font-mono text-xl">DY</div>
+                    <div>
+                        <h1 class="font-bold text-lg tracking-tight">Dilip Kumar Yadav</h1>
+                        <p class="text-xs text-cyan-400 font-mono">Principal AI Architect</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#domains" class="text-sm hover:text-cyan-400 transition-colors">Domains</a>
+                    <a href="#systems" class="text-sm hover:text-cyan-400 transition-colors">Systems</a>
+                    <a href="#expertise" class="text-sm hover:text-cyan-400 transition-colors">Expertise</a>
+                    <a href="#contact" class="px-6 py-2 bg-cyan-400 text-black font-bold text-sm rounded hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] transition-all">Connect</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20">
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8 reveal-on-scroll">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-400/30 bg-cyan-400/5">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                    <span class="text-xs font-mono text-cyan-400">CTO-Level Technical Leadership • Cross-Domain AI</span>
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight text-wrap-balance">
+                    Architecting AI Across <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-pink-500" id="typing-text">Industries</span>
+                </h1>
+                
+                <p class="text-xl text-gray-400 max-w-lg leading-relaxed text-wrap-balance">
+                    Principal Engineer delivering <span class="text-cyan-400">production-grade AI systems</span> 
+                    across BFSI, Healthcare, Agriculture, Oil & Gas, and Manufacturing. 
+                    From <span class="text-pink-400">sub-second latency</span> voice pipelines to 
+                    <span class="text-purple-400">autonomous agentic platforms</span>.
+                </p>
+
+                <!-- Cross-Domain Metrics -->
+                <div class="grid grid-cols-4 gap-4 mt-8">
+                    <div class="glass-panel p-4 rounded-lg border border-cyan-400/20 text-center">
+                        <div class="text-3xl font-bold font-mono text-cyan-400 counter" data-target="6">0</div>
+                        <div class="text-xs text-gray-500 mt-1">Industries</div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-lg border border-pink-500/20 text-center">
+                        <div class="text-3xl font-bold font-mono text-pink-400 counter" data-target="15">0</div>
+                        <div class="text-xs text-gray-500 mt-1">Production Systems</div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-lg border border-purple-500/20 text-center">
+                        <div class="text-3xl font-bold font-mono text-purple-400 counter" data-target="40">0</div>
+                        <div class="text-xs text-gray-500 mt-1">% Avg Improvement</div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-lg border border-yellow-500/20 text-center">
+                        <div class="text-3xl font-bold font-mono text-yellow-400">$10M+</div>
+                        <div class="text-xs text-gray-500 mt-1">Business Impact</div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 rounded-full border border-cyan-400/30 text-cyan-400 text-xs font-mono">BFSI</span>
+                    <span class="px-3 py-1 rounded-full border border-pink-500/30 text-pink-400 text-xs font-mono">Healthcare</span>
+                    <span class="px-3 py-1 rounded-full border border-purple-500/30 text-purple-400 text-xs font-mono">Logistics</span>
+                    <span class="px-3 py-1 rounded-full border border-green-500/30 text-green-400 text-xs font-mono">Agriculture</span>
+                    <span class="px-3 py-1 rounded-full border border-yellow-500/30 text-yellow-400 text-xs font-mono">Oil & Gas</span>
+                </div>
+            </div>
+
+            <div class="hidden lg:block reveal-on-scroll">
+                <div class="glass-panel rounded-2xl p-6 border border-cyan-400/20">
+                    <div class="flex justify-between items-center mb-4 border-b border-gray-700 pb-2">
+                        <span class="text-xs font-mono text-cyan-400">CROSS_DOMAIN_ARCHITECTURE</span>
+                        <div class="flex gap-2">
+                            <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                            <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                            <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Domain Network Visualization -->
+                    <svg viewBox="0 0 400 300" class="w-full h-auto">
+                        <!-- Central Hub -->
+                        <circle cx="200" cy="150" r="30" fill="none" stroke="#00f0ff" stroke-width="2" class="animate-pulse"/>
+                        <text x="200" y="155" text-anchor="middle" fill="#00f0ff" font-size="10" font-family="monospace">AI_CORE</text>
+                        
+                        <!-- Domain Nodes -->
+                        <circle cx="100" cy="80" r="20" fill="rgba(0,240,255,0.1)" stroke="#00f0ff" stroke-width="1"/>
+                        <text x="100" y="85" text-anchor="middle" fill="#00f0ff" font-size="8" font-family="monospace">BFSI</text>
+                        
+                        <circle cx="300" cy="80" r="20" fill="rgba(255,0,122,0.1)" stroke="#ff007a" stroke-width="1"/>
+                        <text x="300" y="85" text-anchor="middle" fill="#ff007a" font-size="8" font-family="monospace">HEALTH</text>
+                        
+                        <circle cx="80" cy="200" r="20" fill="rgba(112,0,255,0.1)" stroke="#7000ff" stroke-width="1"/>
+                        <text x="80" y="205" text-anchor="middle" fill="#7000ff" font-size="8" font-family="monospace">AGRI</text>
+                        
+                        <circle cx="320" cy="200" r="20" fill="rgba(234,179,8,0.1)" stroke="#eab308" stroke-width="1"/>
+                        <text x="320" y="205" text-anchor="middle" fill="#eab308" font-size="8" font-family="monospace">OIL&GAS</text>
+                        
+                        <!-- Connections -->
+                        <line x1="130" y1="90" x2="170" y2="130" stroke="#00f0ff" stroke-width="1" opacity="0.5" class="flow-line"/>
+                        <line x1="270" y1="90" x2="230" y2="130" stroke="#ff007a" stroke-width="1" opacity="0.5" class="flow-line"/>
+                        <line x1="100" y1="180" x2="170" y2="170" stroke="#7000ff" stroke-width="1" opacity="0.5" class="flow-line"/>
+                        <line x1="300" y1="180" x2="230" y2="170" stroke="#eab308" stroke-width="1" opacity="0.5" class="flow-line"/>
+                        
+                        <!-- Status -->
+                        <text x="200" y="280" text-anchor="middle" fill="#10b981" font-size="10" font-family="monospace">● ALL_DOMAINS_OPERATIONAL</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Domain Expertise Section (NEW) -->
+    <section id="domains" class="py-32 relative bg-gray-900/30">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal-on-scroll">
+                <h2 class="text-sm font-bold text-cyan-400 tracking-widest uppercase mb-4">Vertical Expertise</h2>
+                <h3 class="text-4xl font-bold mb-4 text-wrap-balance">Cross-Domain <span class="text-pink-500">AI Architecture</span></h3>
+                <p class="text-gray-400 max-w-2xl mx-auto text-wrap-balance">
+                    Proven track record architecting intelligent systems across diverse verticals. 
+                    Domain-agnostic technical leadership with deep business context.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- BFSI -->
+                <div class="domain-card glass-panel rounded-2xl p-6 border border-cyan-400/20 reveal-on-scroll">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-cyan-400/10 flex items-center justify-center">
+                            <i class="fas fa-university text-cyan-400 text-xl"></i>
+                        </div>
+                        <span class="text-xs font-mono text-cyan-400 border border-cyan-400/30 px-2 py-1 rounded">BFSI</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">Banking & Finance</h4>
+                    <p class="text-gray-400 text-sm mb-4 text-wrap-balance">
+                        Fraud detection systems with XGBoost and SHAP explainability. 
+                        Real-time transaction monitoring and risk scoring.
+                    </p>
+                    <ul class="space-y-2 text-xs text-gray-500 font-mono">
+                        <li class="flex justify-between">
+                            <span>Fraud Prevention</span>
+                            <span class="text-cyan-400">96% Precision</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Risk Exposure</span>
+                            <span class="text-cyan-400">-42% Reduction</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Healthcare -->
+                <div class="domain-card glass-panel rounded-2xl p-6 border border-pink-500/20 reveal-on-scroll">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-pink-500/10 flex items-center justify-center">
+                            <i class="fas fa-heartbeat text-pink-500 text-xl"></i>
+                        </div>
+                        <span class="text-xs font-mono text-pink-500 border border-pink-500/30 px-2 py-1 rounded">HEALTHCARE</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">Healthcare AI</h4>
+                    <p class="text-gray-400 text-sm mb-4 text-wrap-balance">
+                        Document intelligence for clinical records. NLP pipelines for 
+                        medical entity extraction and diagnostic assistance.
+                    </p>
+                    <ul class="space-y-2 text-xs text-gray-500 font-mono">
+                        <li class="flex justify-between">
+                            <span>Document Processing</span>
+                            <span class="text-pink-500">75% Faster</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Accuracy</span>
+                            <span class="text-pink-500">0.91 F1</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Logistics/Supply Chain -->
+                <div class="domain-card glass-panel rounded-2xl p-6 border border-purple-500/20 reveal-on-scroll">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center">
+                            <i class="fas fa-shipping-fast text-purple-500 text-xl"></i>
+                        </div>
+                        <span class="text-xs font-mono text-purple-400 border border-purple-500/30 px-2 py-1 rounded">LOGISTICS</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">Supply Chain & Customs</h4>
+                    <p class="text-gray-400 text-sm mb-4 text-wrap-balance">
+                        Agentic AI for tariff classification and trade compliance. 
+                        Real-time voice translation for cross-border operations.
+                    </p>
+                    <ul class="space-y-2 text-xs text-gray-500 font-mono">
+                        <li class="flex justify-between">
+                            <span>Automation</span>
+                            <span class="text-purple-400">60% Workload</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Latency</span>
+                            <span class="text-purple-400">150ms P95</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Manufacturing -->
+                <div class="domain-card glass-panel rounded-2xl p-6 border border-yellow-500/20 reveal-on-scroll">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-yellow-500/10 flex items-center justify-center">
+                            <i class="fas fa-industry text-yellow-500 text-xl"></i>
+                        </div>
+                        <span class="text-xs font-mono text-yellow-500 border border-yellow-500/30 px-2 py-1 rounded">MANUFACTURING</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">Industrial IoT</h4>
+                    <p class="text-gray-400 text-sm mb-4 text-wrap-balance">
+                        Predictive maintenance using LSTM time-series forecasting. 
+                        Sensor anomaly detection for Industry 4.0.
+                    </p>
+                    <ul class="space-y-2 text-xs text-gray-500 font-mono">
+                        <li class="flex justify-between">
+                            <span>Downtime Reduction</span>
+                            <span class="text-yellow-500">35%</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Accuracy</span>
+                            <span class="text-yellow-500">93%</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Agriculture -->
+                <div class="domain-card glass-panel rounded-2xl p-6 border border-green-500/20 reveal-on-scroll">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center">
+                            <i class="fas fa-seedling text-green-500 text-xl"></i>
+                        </div>
+                        <span class="text-xs font-mono text-green-500 border border-green-500/30 px-2 py-1 rounded">AGRICULTURE</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">AgriTech Solutions</h4>
+                    <p class="text-gray-400 text-sm mb-4 text-wrap-balance">
+                        Crop disease detection using computer vision. 
+                        Supply chain optimization and yield prediction models.
+                    </p>
+                    <ul class="space-y-2 text-xs text-gray-500 font-mono">
+                        <li class="flex justify-between">
+                            <span>Yield Prediction</span>
+                            <span class="text-green-500">ML Models</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Computer Vision</span>
+                            <span class="text-green-500">ResNet/ViT</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Oil & Gas -->
+                <div class="domain-card glass-panel rounded-2xl p-6 border border-orange-500/20 reveal-on-scroll">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-orange-500/10 flex items-center justify-center">
+                            <i class="fas fa-oil-can text-orange-500 text-xl"></i>
+                        </div>
+                        <span class="text-xs font-mono text-orange-500 border border-orange-500/30 px-2 py-1 rounded">OIL & GAS</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">Energy Sector</h4>
+                    <p class="text-gray-400 text-sm mb-4 text-wrap-balance">
+                        Equipment failure prediction and pipeline monitoring. 
+                        Safety compliance automation and hazard detection.
+                    </p>
+                    <ul class="space-y-2 text-xs text-gray-500 font-mono">
+                        <li class="flex justify-between">
+                            <span>Predictive Maint.</span>
+                            <span class="text-orange-500">LSTM/Transformer</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Safety Systems</span>
+                            <span class="text-orange-500">Real-time</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Production Systems (All Projects) -->
+    <section id="systems" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-16 reveal-on-scroll">
+                <h2 class="text-sm font-bold text-cyan-400 tracking-widest uppercase mb-4">Production Systems</h2>
+                <h3 class="text-4xl font-bold mb-4 text-wrap-balance">Enterprise <span class="text-pink-500">Deployments</span></h3>
+                <p class="text-gray-400 max-w-2xl text-wrap-balance">
+                    End-to-end architectures spanning real-time inference, agentic workflows, 
+                    and predictive analytics across six industry verticals.
+                </p>
+            </div>
+
+            <!-- System 1: Voice AI (Logistics) - SIMPLIFIED -->
+            <div class="mb-8 glass-panel rounded-2xl overflow-hidden border border-cyan-400/20 reveal-on-scroll">
+                <div class="grid lg:grid-cols-5">
+                    <div class="lg:col-span-3 p-8 border-b lg:border-b-0 lg:border-r border-cyan-400/10 project-content">
+                        <div class="flex items-center gap-3 mb-2 flex-wrap">
+                            <span class="px-2 py-1 rounded bg-cyan-400/10 text-cyan-400 text-xs font-mono">LOGISTICS</span>
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-500 text-xs font-mono">PRODUCTION</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2 text-wrap-balance">Real-Time Voice Translation Platform</h3>
+                        <p class="text-sm text-gray-500 font-mono mb-4">ZKteco • Cross-border Operations • 2024-Present</p>
+                        
+                        <p class="text-gray-400 mb-6 text-wrap-balance">
+                            Distributed speech-to-speech system for customs and logistics. 
+                            WebSocket streaming architecture with VAD optimization, INT8 quantized Whisper, 
+                            and Azure TTS. Handles 10,000+ concurrent calls.
+                        </p>
+
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-cyan-400/20">
+                                <div class="text-2xl font-bold text-cyan-400">150ms</div>
+                                <div class="text-xs text-gray-500">P95 Latency</div>
+                            </div>
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-cyan-400/20">
+                                <div class="text-2xl font-bold text-cyan-400">42%</div>
+                                <div class="text-xs text-gray-500">Latency ↓</div>
+                            </div>
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-cyan-400/20">
+                                <div class="text-2xl font-bold text-cyan-400">8.2%</div>
+                                <div class="text-xs text-gray-500">WER</div>
+                            </div>
+                        </div>
+
+                        <button onclick="toggleDeepDive('voice-details')" class="text-cyan-400 text-sm font-mono hover:underline flex items-center gap-2">
+                            <span>[+] View Architecture Spec</span>
+                        </button>
+                    </div>
+                    <div class="lg:col-span-2 bg-gray-800/30 p-6 flex items-center justify-center border-l border-cyan-400/10">
+                        <!-- Simplified Voice Architecture -->
+                        <svg viewBox="0 0 280 120" class="w-full h-auto">
+                            <!-- User Input -->
+                            <rect x="0" y="35" width="40" height="30" rx="5" fill="rgba(0,240,255,0.1)" stroke="#00f0ff" stroke-width="1.5"/>
+                            <text x="20" y="55" text-anchor="middle" fill="#00f0ff" font-size="8" font-family="monospace">USER</text>
+                            
+                            <!-- VAD -->
+                            <rect x="50" y="35" width="35" height="30" rx="5" fill="rgba(255,0,122,0.1)" stroke="#ff007a" stroke-width="1.5"/>
+                            <text x="67" y="55" text-anchor="middle" fill="#ff007a" font-size="8" font-family="monospace">VAD</text>
+                            
+                            <!-- ASR -->
+                            <rect x="95" y="35" width="40" height="30" rx="5" fill="rgba(255,0,122,0.1)" stroke="#ff007a" stroke-width="1.5"/>
+                            <text x="115" y="55" text-anchor="middle" fill="#ff007a" font-size="7" font-family="monospace">ASR</text>
+                            
+                            <!-- MT -->
+                            <rect x="145" y="35" width="35" height="30" rx="5" fill="rgba(112,0,255,0.1)" stroke="#7000ff" stroke-width="1.5"/>
+                            <text x="162" y="55" text-anchor="middle" fill="#7000ff" font-size="8" font-family="monospace">MT</text>
+                            
+                            <!-- TTS -->
+                            <rect x="190" y="35" width="40" height="30" rx="5" fill="rgba(0,240,255,0.1)" stroke="#00f0ff" stroke-width="1.5"/>
+                            <text x="210" y="55" text-anchor="middle" fill="#00f0ff" font-size="8" font-family="monospace">TTS</text>
+                            
+                            <!-- User Output -->
+                            <rect x="240" y="35" width="40" height="30" rx="5" fill="rgba(0,240,255,0.1)" stroke="#00f0ff" stroke-width="1.5"/>
+                            <text x="260" y="55" text-anchor="middle" fill="#00f0ff" font-size="8" font-family="monospace">USER</text>
+                            
+                            <!-- Arrows -->
+                            <line x1="40" y1="50" x2="50" y2="50" stroke="#00f0ff" stroke-width="1.5"/>
+                            <polygon points="50,50 47,47 47,53" fill="#00f0ff"/>
+                            
+                            <line x1="85" y1="50" x2="95" y2="50" stroke="#ff007a" stroke-width="1.5"/>
+                            <polygon points="95,50 92,47 92,53" fill="#ff007a"/>
+                            
+                            <line x1="135" y1="50" x2="145" y2="50" stroke="#ff007a" stroke-width="1.5"/>
+                            <polygon points="145,50 142,47 142,53" fill="#ff007a"/>
+                            
+                            <line x1="180" y1="50" x2="190" y2="50" stroke="#7000ff" stroke-width="1.5"/>
+                            <polygon points="190,50 187,47 187,53" fill="#7000ff"/>
+                            
+                            <line x1="230" y1="50" x2="240" y2="50" stroke="#00f0ff" stroke-width="1.5"/>
+                            <polygon points="240,50 237,47 237,53" fill="#00f0ff"/>
+                            
+                            <!-- Labels -->
+                            <text x="140" y="95" text-anchor="middle" fill="#64748b" font-size="8" font-family="monospace">WebSocket Stream • 150ms E2E</text>
+                        </svg>
+                    </div>
+                </div>
+                <div id="voice-details" class="deep-dive border-t border-cyan-400/10 bg-gray-900/30 p-8">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-cyan-400 font-mono mb-4">// Infrastructure Stack</h4>
+                            <ul class="space-y-2 text-sm text-gray-400 font-mono text-wrap-balance">
+                                <li>• GPU: NVIDIA T4 (g4dn.xlarge) - INT8 Quantization</li>
+                                <li>• Orchestration: Kubernetes (EKS) with HPA</li>
+                                <li>• Streaming: WebSocket (50ms chunks)</li>
+                                <li>• Cache: Redis (80% hit rate on trade terms)</li>
+                                <li>• Monitoring: Prometheus + Grafana + Jaeger</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-cyan-400 font-mono mb-4">// Domain Context</h4>
+                            <p class="text-sm text-gray-400 text-wrap-balance">
+                                Built for customs clearance at ports, enabling real-time communication 
+                                between international traders. Handles multilingual trade terminology 
+                                with domain-specific vocab adaptation.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System 2: Agentic AI (Customs/Logistics) -->
+            <div class="mb-8 glass-panel rounded-2xl overflow-hidden border border-pink-500/20 reveal-on-scroll">
+                <div class="grid lg:grid-cols-5">
+                    <div class="lg:col-span-3 p-8 border-b lg:border-b-0 lg:border-r border-pink-500/10 project-content">
+                        <div class="flex items-center gap-3 mb-2 flex-wrap">
+                            <span class="px-2 py-1 rounded bg-pink-500/10 text-pink-500 text-xs font-mono">LOGISTICS</span>
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-500 text-xs font-mono">PRODUCTION</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2 text-wrap-balance">Autonomous Tariff Classification</h3>
+                        <p class="text-sm text-gray-500 font-mono mb-4">ZKteco • Agentic AI • 2024-Present</p>
+                        
+                        <p class="text-gray-400 mb-6 text-wrap-balance">
+                            Multi-agent system for customs automation using LangChain, RAG with FAISS, 
+                            and fine-tuned Mistral-7B (LoRA). Constitutional AI guardrails for compliance.
+                        </p>
+
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-pink-500/20">
+                                <div class="text-2xl font-bold text-pink-400">0.91</div>
+                                <div class="text-xs text-gray-500">Precision@K</div>
+                            </div>
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-pink-500/20">
+                                <div class="text-2xl font-bold text-pink-400">60%</div>
+                                <div class="text-xs text-gray-500">Manual Work ↓</div>
+                            </div>
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-pink-500/20">
+                                <div class="text-2xl font-bold text-pink-400">2.3x</div>
+                                <div class="text-xs text-gray-500">Throughput</div>
+                            </div>
+                        </div>
+
+                        <button onclick="toggleDeepDive('agent-details')" class="text-pink-400 text-sm font-mono hover:underline flex items-center gap-2">
+                            <span>[+] View Agent Workflow</span>
+                        </button>
+                    </div>
+                    <div class="lg:col-span-2 bg-gray-800/30 p-4 flex items-center justify-center border-l border-pink-500/10">
+                        <!-- Agent Architecture Diagram -->
+                        <svg viewBox="0 0 300 250" class="arch-diagram">
+                            <!-- Input -->
+                            <rect x="20" y="110" width="50" height="30" rx="5" fill="rgba(255,0,122,0.1)" stroke="#ff007a" stroke-width="1.5"/>
+                            <text x="45" y="130" text-anchor="middle" fill="#ff007a" font-size="8" font-family="monospace">Input</text>
+                            
+                            <!-- RAG/FAISS -->
+                            <rect x="90" y="70" width="60" height="35" rx="5" fill="rgba(255,0,122,0.15)" stroke="#ff007a" stroke-width="1.5"/>
+                            <text x="120" y="92" text-anchor="middle" fill="#ff007a" font-size="9" font-family="monospace">FAISS</text>
+                            
+                            <!-- Mistral -->
+                            <rect x="90" y="145" width="60" height="35" rx="5" fill="rgba(255,0,122,0.2)" stroke="#ff007a" stroke-width="2"/>
+                            <text x="120" y="167" text-anchor="middle" fill="#ff007a" font-size="9" font-family="monospace">Mistral</text>
+                            
+                            <!-- Guardrails -->
+                            <rect x="170" y="110" width="50" height="30" rx="5" fill="rgba(112,0,255,0.1)" stroke="#7000ff" stroke-width="1.5"/>
+                            <text x="195" y="130" text-anchor="middle" fill="#7000ff" font-size="8" font-family="monospace">Guard</text>
+                            
+                            <!-- Output -->
+                            <rect x="240" y="110" width="40" height="30" rx="5" fill="rgba(255,0,122,0.1)" stroke="#ff007a" stroke-width="1.5"/>
+                            <text x="260" y="130" text-anchor="middle" fill="#ff007a" font-size="8" font-family="monospace">Out</text>
+                            
+                            <!-- Arrows -->
+                            <line x1="70" y1="125" x2="90" y2="87" stroke="#ff007a" stroke-width="1.5" opacity="0.8"/>
+                            <line x1="70" y1="125" x2="90" y2="162" stroke="#ff007a" stroke-width="1.5" opacity="0.8"/>
+                            <line x1="150" y1="87" x2="170" y2="120" stroke="#ff007a" stroke-width="1.5" opacity="0.6"/>
+                            <line x1="150" y1="162" x2="170" y2="130" stroke="#ff007a" stroke-width="1.5" opacity="0.6"/>
+                            <line x1="220" y1="125" x2="240" y2="125" stroke="#ff007a" stroke-width="1.5" opacity="0.8"/>
+                            
+                            <!-- LoRA Badge -->
+                            <circle cx="120" cy="145" r="8" fill="#0a0e17" stroke="#ff007a" stroke-width="1"/>
+                            <text x="120" y="149" text-anchor="middle" fill="#ff007a" font-size="7" font-family="monospace">LoRA</text>
+                            
+                            <!-- Agents Label -->
+                            <text x="150" y="40" text-anchor="middle" fill="#64748b" font-size="10" font-family="monospace">Multi-Agent Orchestration</text>
+                            <line x1="120" y1="50" x2="120" y2="70" stroke="#64748b" stroke-width="1" stroke-dasharray="2,2"/>
+                        </svg>
+                    </div>
+                </div>
+                <div id="agent-details" class="deep-dive border-t border-pink-500/10 bg-gray-900/30 p-8">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-pink-400 font-mono mb-4">// Technical Spec</h4>
+                            <ul class="space-y-2 text-sm text-gray-400 font-mono text-wrap-balance">
+                                <li>• Base: mistralai/Mistral-7B-v0.1 (QLoRA 4-bit NF4)</li>
+                                <li>• Dataset: 50k tariff schedules + HS codes</li>
+                                <li>• Vector Store: FAISS with L2 distance</li>
+                                <li>• Framework: LangChain + LangGraph</li>
+                                <li>• Constitutional AI: Rule-based guardrails</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-pink-400 font-mono mb-4">// Agent Chain</h4>
+                            <div class="space-y-2 text-sm text-gray-400 font-mono">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-pink-500">1.</span>
+                                    <span>Classification Agent</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-pink-500">2.</span>
+                                    <span>Validation Agent (RAG)</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-pink-500">3.</span>
+                                    <span>Calculation Agent</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-pink-500">4.</span>
+                                    <span>Audit Trail Generator</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System 3: BFSI Fraud Detection -->
+            <div class="mb-8 glass-panel rounded-2xl overflow-hidden border border-purple-500/20 reveal-on-scroll">
+                <div class="grid lg:grid-cols-5">
+                    <div class="lg:col-span-3 p-8 border-b lg:border-b-0 lg:border-r border-purple-500/10 project-content">
+                        <div class="flex items-center gap-3 mb-2 flex-wrap">
+                            <span class="px-2 py-1 rounded bg-purple-500/10 text-purple-400 text-xs font-mono">BFSI</span>
+                            <span class="px-2 py-1 rounded bg-blue-500/10 text-blue-400 text-xs font-mono">XAI</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2 text-wrap-balance">Credit Card Fraud Detection with XAI</h3>
+                        <p class="text-sm text-gray-500 font-mono mb-4">Personal Project • Risk Analytics • 2023</p>
+                        
+                        <p class="text-gray-400 mb-6 text-wrap-balance">
+                            XGBoost ensemble for real-time fraud detection on imbalanced datasets. 
+                            SMOTE resampling, SHAP explainability for regulatory compliance, 
+                            deployed on AWS Lambda with S3 triggers.
+                        </p>
+
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-purple-500/20">
+                                <div class="text-2xl font-bold text-purple-400">96%</div>
+                                <div class="text-xs text-gray-500">Precision</div>
+                            </div>
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-purple-500/20">
+                                <div class="text-2xl font-bold text-purple-400">94%</div>
+                                <div class="text-xs text-gray-500">Recall</div>
+                            </div>
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-purple-500/20">
+                                <div class="text-2xl font-bold text-purple-400">0.94</div>
+                                <div class="text-xs text-gray-500">AUC-ROC</div>
+                            </div>
+                        </div>
+
+                        <button onclick="toggleDeepDive('fraud-details')" class="text-purple-400 text-sm font-mono hover:underline flex items-center gap-2">
+                            <span>[+] View XAI Implementation</span>
+                        </button>
+                    </div>
+                    <div class="lg:col-span-2 bg-gray-800/30 p-4 flex items-center justify-center border-l border-purple-500/10">
+                        <!-- Fraud Detection Architecture -->
+                        <svg viewBox="0 0 300 250" class="arch-diagram">
+                            <!-- Transaction Input -->
+                            <rect x="20" y="110" width="50" height="30" rx="5" fill="rgba(112,0,255,0.1)" stroke="#7000ff" stroke-width="1.5"/>
+                            <text x="45" y="130" text-anchor="middle" fill="#7000ff" font-size="7" font-family="monospace">TXN</text>
+                            
+                            <!-- Feature Eng -->
+                            <rect x="90" y="110" width="50" height="30" rx="5" fill="rgba(112,0,255,0.15)" stroke="#7000ff" stroke-width="1.5"/>
+                            <text x="115" y="130" text-anchor="middle" fill="#7000ff" font-size="7" font-family="monospace">Features</text>
+                            
+                            <!-- XGBoost -->
+                            <rect x="160" y="100" width="60" height="50" rx="5" fill="rgba(112,0,255,0.2)" stroke="#7000ff" stroke-width="2"/>
+                            <text x="190" y="130" text-anchor="middle" fill="#7000ff" font-size="10" font-family="monospace">XGBoost</text>
+                            
+                            <!-- SHAP -->
+                            <rect x="240" y="90" width="40" height="30" rx="5" fill="rgba(0,240,255,0.1)" stroke="#00f0ff" stroke-width="1.5"/>
+                            <text x="260" y="110" text-anchor="middle" fill="#00f0ff" font-size="8" font-family="monospace">SHAP</text>
+                            
+                            <!-- Output -->
+                            <rect x="240" y="140" width="40" height="30" rx="5" fill="rgba(112,0,255,0.1)" stroke="#7000ff" stroke-width="1.5"/>
+                            <text x="260" y="160" text-anchor="middle" fill="#7000ff" font-size="8" font-family="monospace">Risk</text>
+                            
+                            <!-- AWS Lambda -->
+                            <rect x="80" y="40" width="140" height="30" rx="5" fill="none" stroke="#7000ff" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>
+                            <text x="150" y="60" text-anchor="middle" fill="#7000ff" font-size="9" font-family="monospace" opacity="0.8">AWS Lambda + S3</text>
+                            
+                            <!-- Connections -->
+                            <line x1="70" y1="125" x2="90" y2="125" stroke="#7000ff" stroke-width="1.5" opacity="0.8"/>
+                            <line x1="140" y1="125" x2="160" y2="125" stroke="#7000ff" stroke-width="1.5" opacity="0.8"/>
+                            <line x1="220" y1="115" x2="240" y2="105" stroke="#00f0ff" stroke-width="1.5" opacity="0.8"/>
+                            <line x1="220" y1="135" x2="240" y2="155" stroke="#7000ff" stroke-width="1.5" opacity="0.8"/>
+                            <line x1="115" y1="110" x2="115" y2="70" stroke="#7000ff" stroke-width="1" stroke-dasharray="2,2" opacity="0.4"/>
+                            <line x1="190" y1="100" x2="190" y2="70" stroke="#7000ff" stroke-width="1" stroke-dasharray="2,2" opacity="0.4"/>
+                            
+                            <!-- SMOTE -->
+                            <rect x="90" y="170" width="50" height="25" rx="5" fill="rgba(255,0,122,0.1)" stroke="#ff007a" stroke-width="1"/>
+                            <text x="115" y="187" text-anchor="middle" fill="#ff007a" font-size="8" font-family="monospace">SMOTE</text>
+                            <line x1="115" y1="140" x2="115" y2="170" stroke="#ff007a" stroke-width="1" stroke-dasharray="2,2" opacity="0.5"/>
+                            
+                            <text x="150" y="220" text-anchor="middle" fill="#64748b" font-size="9" font-family="monospace">Real-time Inference</text>
+                        </svg>
+                    </div>
+                </div>
+                <div id="fraud-details" class="deep-dive border-t border-purple-500/10 bg-gray-900/30 p-8">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-purple-400 font-mono mb-4">// BFSI Compliance Stack</h4>
+                            <ul class="space-y-2 text-sm text-gray-400 font-mono text-wrap-balance">
+                                <li>• Model: XGBoost with scale_pos_weight balancing</li>
+                                <li>• Explainability: SHAP values for audit trails</li>
+                                <li>• Deployment: AWS Lambda (serverless inference)</li>
+                                <li>• Monitoring: CloudWatch + Model drift detection</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-purple-400 font-mono mb-4">// Business Impact</h4>
+                            <p class="text-sm text-gray-400 text-wrap-balance">
+                                Financial fraud costs banks $4.5T annually. This system reduces false positives by 35% 
+                                while maintaining 96% precision, saving millions in chargeback costs and 
+                                improving customer experience.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System 4: Manufacturing Predictive Maintenance -->
+            <div class="mb-8 glass-panel rounded-2xl overflow-hidden border border-yellow-500/20 reveal-on-scroll">
+                <div class="grid lg:grid-cols-5">
+                    <div class="lg:col-span-3 p-8 border-b lg:border-b-0 lg:border-r border-yellow-500/10 project-content">
+                        <div class="flex items-center gap-3 mb-2 flex-wrap">
+                            <span class="px-2 py-1 rounded bg-yellow-500/10 text-yellow-500 text-xs font-mono">MANUFACTURING</span>
+                            <span class="px-2 py-1 rounded bg-orange-500/10 text-orange-500 text-xs font-mono">IOT</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2 text-wrap-balance">Predictive Maintenance for Industrial Equipment</h3>
+                        <p class="text-sm text-gray-500 font-mono mb-4">Industrial IoT • Time Series • 2022</p>
+                        
+                        <p class="text-gray-400 mb-6 text-wrap-balance">
+                            Multivariate LSTM-based predictive maintenance using real-time sensor data. 
+                            Full MLOps pipeline with FastAPI, Docker, AWS ECS/ECR, and real-time alerting 
+                            for Industry 4.0 applications.
+                        </p>
+
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-yellow-500/20">
+                                <div class="text-2xl font-bold text-yellow-400">93%</div>
+                                <div class="text-xs text-gray-500">Accuracy</div>
+                            </div>
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-yellow-500/20">
+                                <div class="text-2xl font-bold text-yellow-400">35%</div>
+                                <div class="text-xs text-gray-500">Downtime ↓</div>
+                            </div>
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-yellow-500/20">
+                                <div class="text-2xl font-bold text-yellow-400">LSTM</div>
+                                <div class="text-xs text-gray-500">Architecture</div>
+                            </div>
+                        </div>
+
+                        <button onclick="toggleDeepDive('maintenance-details')" class="text-yellow-400 text-sm font-mono hover:underline flex items-center gap-2">
+                            <span>[+] View IoT Architecture</span>
+                        </button>
+                    </div>
+                    <div class="lg:col-span-2 bg-gray-800/30 p-4 flex items-center justify-center border-l border-yellow-500/10">
+                        <!-- IoT Architecture Diagram -->
+                        <svg viewBox="0 0 300 250" class="arch-diagram">
+                            <!-- Sensors -->
+                            <rect x="20" y="40" width="40" height="25" rx="3" fill="rgba(234,179,8,0.1)" stroke="#eab308" stroke-width="1"/>
+                            <text x="40" y="57" text-anchor="middle" fill="#eab308" font-size="7" font-family="monospace">Vib</text>
+                            
+                            <rect x="20" y="75" width="40" height="25" rx="3" fill="rgba(234,179,8,0.1)" stroke="#eab308" stroke-width="1"/>
+                            <text x="40" y="92" text-anchor="middle" fill="#eab308" font-size="7" font-family="monospace">Temp</text>
+                            
+                            <rect x="20" y="110" width="40" height="25" rx="3" fill="rgba(234,179,8,0.1)" stroke="#eab308" stroke-width="1"/>
+                            <text x="40" y="127" text-anchor="middle" fill="#eab308" font-size="7" font-family="monospace">Press</text>
+                            
+                            <!-- MQTT -->
+                            <rect x="80" y="75" width="50" height="40" rx="5" fill="rgba(234,179,8,0.15)" stroke="#eab308" stroke-width="1.5"/>
+                            <text x="105" y="100" text-anchor="middle" fill="#eab308" font-size="9" font-family="monospace">MQTT</text>
+                            
+                            <!-- AWS IoT -->
+                            <rect x="150" y="75" width="50" height="40" rx="5" fill="rgba(234,179,8,0.2)" stroke="#eab308" stroke-width="2"/>
+                            <text x="175" y="95" text-anchor="middle" fill="#eab308" font-size="8" font-family="monospace">AWS</text>
+                            <text x="175" y="107" text-anchor="middle" fill="#eab308" font-size="8" font-family="monospace">IoT</text>
+                            
+                            <!-- LSTM -->
+                            <rect x="220" y="60" width="60" height="35" rx="5" fill="rgba(234,179,8,0.25)" stroke="#eab308" stroke-width="2"/>
+                            <text x="250" y="82" text-anchor="middle" fill="#eab308" font-size="10" font-family="monospace">LSTM</text>
+                            
+                            <!-- Alert -->
+                            <rect x="220" y="110" width="60" height="35" rx="5" fill="rgba(255,0,122,0.1)" stroke="#ff007a" stroke-width="1.5"/>
+                            <text x="250" y="132" text-anchor="middle" fill="#ff007a" font-size="9" font-family="monospace">Alert</text>
+                            
+                            <!-- Connections -->
+                            <line x1="60" y1="52" x2="80" y2="87" stroke="#eab308" stroke-width="1" opacity="0.6"/>
+                            <line x1="60" y1="92" x2="80" y2="95" stroke="#eab308" stroke-width="1.5" opacity="0.8"/>
+                            <line x1="60" y1="122" x2="80" y2="102" stroke="#eab308" stroke-width="1" opacity="0.6"/>
+                            <line x1="130" y1="95" x2="150" y2="95" stroke="#eab308" stroke-width="1.5" opacity="0.8"/>
+                            <line x1="200" y1="85" x2="220" y2="77" stroke="#eab308" stroke-width="1.5" opacity="0.8"/>
+                            <line x1="200" y1="105" x2="220" y2="127" stroke="#ff007a" stroke-width="1.5" opacity="0.8"/>
+                            
+                            <!-- Time Series indicator -->
+                            <path d="M 230 170 Q 250 150 270 170 T 290 170" fill="none" stroke="#eab308" stroke-width="2" opacity="0.6"/>
+                            <text x="260" y="190" text-anchor="middle" fill="#64748b" font-size="8" font-family="monospace">Time Series</text>
+                            
+                            <text x="150" y="220" text-anchor="middle" fill="#64748b" font-size="9" font-family="monospace">5-step Multivariate</text>
+                        </svg>
+                    </div>
+                </div>
+                <div id="maintenance-details" class="deep-dive border-t border-yellow-500/10 bg-gray-900/30 p-8">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-yellow-400 font-mono mb-4">// Industrial Stack</h4>
+                            <ul class="space-y-2 text-sm text-gray-400 font-mono text-wrap-balance">
+                                <li>• Sensors: Vibration, Temperature, Pressure</li>
+                                <li>• Model: Multivariate LSTM (5 time steps)</li>
+                                <li>• Edge: MQTT broker for real-time ingestion</li>
+                                <li>• Cloud: AWS IoT Core → SageMaker → ECS</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-yellow-400 font-mono mb-4">// Domain Applications</h4>
+                            <p class="text-sm text-gray-400 text-wrap-balance">
+                                Applicable to Oil & Gas (pipeline monitoring), Agriculture (harvester maintenance), 
+                                and Automotive (production line robotics). Prevents catastrophic failures 
+                                saving millions in equipment costs.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System 5: E-commerce Recommendation -->
+            <div class="mb-8 glass-panel rounded-2xl overflow-hidden border border-blue-500/20 reveal-on-scroll">
+                <div class="grid lg:grid-cols-5">
+                    <div class="lg:col-span-3 p-8 border-b lg:border-b-0 lg:border-r border-blue-500/10 project-content">
+                        <div class="flex items-center gap-3 mb-2 flex-wrap">
+                            <span class="px-2 py-1 rounded bg-blue-500/10 text-blue-400 text-xs font-mono">E-COMMERCE</span>
+                            <span class="px-2 py-1 rounded bg-pink-500/10 text-pink-400 text-xs font-mono">PERSONALIZATION</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2 text-wrap-balance">AI-Powered Recommendation System</h3>
+                        <p class="text-sm text-gray-500 font-mono mb-4">Retail Tech • Collaborative Filtering • 2022</p>
+                        
+                        <p class="text-gray-400 mb-6 text-wrap-balance">
+                            Hybrid recommendation engine combining collaborative filtering and content-based methods. 
+                            Matrix Factorization with KNN, optimized using LoRA-based fine-tuning for 
+                            real-time personalization at scale.
+                        </p>
+
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-blue-500/20">
+                                <div class="text-2xl font-bold text-blue-400">85%</div>
+                                <div class="text-xs text-gray-500">Accuracy</div>
+                            </div>
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-blue-500/20">
+                                <div class="text-2xl font-bold text-blue-400">92%</div>
+                                <div class="text-xs text-gray-500">Precision</div>
+                            </div>
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-blue-500/20">
+                                <div class="text-2xl font-bold text-blue-400">CF+KNN</div>
+                                <div class="text-xs text-gray-500">Hybrid</div>
+                            </div>
+                        </div>
+
+                        <button onclick="toggleDeepDive('rec-details')" class="text-blue-400 text-sm font-mono hover:underline flex items-center gap-2">
+                            <span>[+] View RecSys Architecture</span>
+                        </button>
+                    </div>
+                    <div class="lg:col-span-2 bg-gray-800/30 p-4 flex items-center justify-center border-l border-blue-500/10">
+                        <!-- Recommendation Architecture -->
+                        <svg viewBox="0 0 300 250" class="arch-diagram">
+                            <!-- User -->
+                            <circle cx="40" cy="125" r="20" fill="rgba(59,130,246,0.1)" stroke="#3b82f6" stroke-width="1.5"/>
+                            <text x="40" y="130" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="monospace">User</text>
+                            
+                            <!-- Matrix Factorization -->
+                            <rect x="80" y="90" width="70" height="40" rx="5" fill="rgba(59,130,246,0.15)" stroke="#3b82f6" stroke-width="1.5"/>
+                            <text x="115" y="110" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="monospace">Matrix</text>
+                            <text x="115" y="122" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="monospace">Factor</text>
+                            
+                            <!-- KNN -->
+                            <rect x="80" y="140" width="70" height="40" rx="5" fill="rgba(59,130,246,0.15)" stroke="#3b82f6" stroke-width="1.5"/>
+                            <text x="115" y="165" text-anchor="middle" fill="#3b82f6" font-size="10" font-family="monospace">KNN</text>
+                            
+                            <!-- Redis -->
+                            <rect x="170" y="100" width="50" height="50" rx="5" fill="rgba(255,0,122,0.1)" stroke="#ff007a" stroke-width="1.5"/>
+                            <text x="195" y="130" text-anchor="middle" fill="#ff007a" font-size="9" font-family="monospace">Redis</text>
+                            
+                            <!-- Output -->
+                            <rect x="240" y="110" width="40" height="30" rx="5" fill="rgba(59,130,246,0.1)" stroke="#3b82f6" stroke-width="1.5"/>
+                            <text x="260" y="130" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="monospace">Rec</text>
+                            
+                            <!-- Connections -->
+                            <line x1="60" y1="115" x2="80" y2="105" stroke="#3b82f6" stroke-width="1.5" opacity="0.8"/>
+                            <line x1="60" y1="135" x2="80" y2="155" stroke="#3b82f6" stroke-width="1.5" opacity="0.8"/>
+                            <line x1="150" y1="110" x2="170" y2="115" stroke="#3b82f6" stroke-width="1.5" opacity="0.8"/>
+                            <line x1="150" y1="160" x2="170" y2="135" stroke="#3b82f6" stroke-width="1.5" opacity="0.8"/>
+                            <line x1="220" y1="125" x2="240" y2="125" stroke="#3b82f6" stroke-width="1.5" opacity="0.8"/>
+                            
+                            <!-- LoRA -->
+                            <rect x="90" y="200" width="50" height="25" rx="3" fill="rgba(255,0,122,0.1)" stroke="#ff007a" stroke-width="1"/>
+                            <text x="115" y="217" text-anchor="middle" fill="#ff007a" font-size="8" font-family="monospace">LoRA</text>
+                            <line x1="115" y1="180" x2="115" y2="200" stroke="#ff007a" stroke-width="1" stroke-dasharray="2,2" opacity="0.5"/>
+                            
+                            <text x="150" y="40" text-anchor="middle" fill="#64748b" font-size="10" font-family="monospace">Hybrid Filtering</text>
+                        </svg>
+                    </div>
+                </div>
+                <div id="rec-details" class="deep-dive border-t border-blue-500/10 bg-gray-900/30 p-8">
+                    <div class="text-sm text-gray-400 text-wrap-balance">
+                        <p class="mb-4"><strong class="text-blue-400">Hybrid Approach:</strong> Combining Matrix Factorization for latent features and KNN for similarity matching. LoRA adaptation used for cold-start problems with new users.</p>
+                        <p class="font-mono text-xs text-gray-500">Architecture: User × Item Matrix → SVD → Latent Factors + KNN Similarity → Ranking → Redis Cache → REST API</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System 6: Sentiment Analysis (Agriculture/Social) -->
+            <div class="mb-8 glass-panel rounded-2xl overflow-hidden border border-green-500/20 reveal-on-scroll">
+                <div class="grid lg:grid-cols-5">
+                    <div class="lg:col-span-3 p-8 border-b lg:border-b-0 lg:border-r border-green-500/10 project-content">
+                        <div class="flex items-center gap-3 mb-2 flex-wrap">
+                            <span class="px-2 py-1 rounded bg-green-500/10 text-green-500 text-xs font-mono">AGRICULTURE/SOCIAL</span>
+                            <span class="px-2 py-1 rounded bg-cyan-500/10 text-cyan-400 text-xs font-mono">NLP</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2 text-wrap-balance">Sentiment Analysis & Social Listening</h3>
+                        <p class="text-sm text-gray-500 font-mono mb-4">AgriTech/Marketing • NLP Pipeline • 2021</p>
+                        
+                        <p class="text-gray-400 mb-6 text-wrap-balance">
+                            NLP pipeline for analyzing farmer sentiment on crop prices, weather impact, and 
+                            policy changes. Built with NLTK, Scikit-learn, and TensorFlow. Deployed as 
+                            REST API using Docker on AWS for scalable market intelligence.
+                        </p>
+
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-green-500/20">
+                                <div class="text-2xl font-bold text-green-400">91%</div>
+                                <div class="text-xs text-gray-500">Accuracy</div>
+                            </div>
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-green-500/20">
+                                <div class="text-2xl font-bold text-green-400">10K+</div>
+                                <div class="text-xs text-gray-500">Texts Analyzed</div>
+                            </div>
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-green-500/20">
+                                <div class="text-2xl font-bold text-green-400">BERT</div>
+                                <div class="text-xs text-gray-500">Base Model</div>
+                            </div>
+                        </div>
+
+                        <button onclick="toggleDeepDive('sentiment-details')" class="text-green-400 text-sm font-mono hover:underline flex items-center gap-2">
+                            <span>[+] View NLP Pipeline</span>
+                        </button>
+                    </div>
+                    <div class="lg:col-span-2 bg-gray-800/30 p-4 flex items-center justify-center border-l border-green-500/10">
+                        <!-- NLP Pipeline Diagram -->
+                        <svg viewBox="0 0 300 250" class="arch-diagram">
+                            <!-- Raw Text -->
+                            <rect x="20" y="110" width="50" height="30" rx="5" fill="rgba(34,197,94,0.1)" stroke="#22c55e" stroke-width="1.5"/>
+                            <text x="45" y="130" text-anchor="middle" fill="#22c55e" font-size="8" font-family="monospace">Text</text>
+                            
+                            <!-- Preprocessing -->
+                            <rect x="90" y="100" width="50" height="50" rx="5" fill="rgba(34,197,94,0.15)" stroke="#22c55e" stroke-width="1.5"/>
+                            <text x="115" y="120" text-anchor="middle" fill="#22c55e" font-size="7" font-family="monospace">Token</text>
+                            <text x="115" y="132" text-anchor="middle" fill="#22c55e" font-size="7" font-family="monospace">Stop</text>
+                            <text x="115" y="144" text-anchor="middle" fill="#22c55e" font-size="7" font-family="monospace">Lem</text>
+                            
+                            <!-- BERT -->
+                            <rect x="160" y="100" width="60" height="50" rx="5" fill="rgba(34,197,94,0.2)" stroke="#22c55e" stroke-width="2"/>
+                            <text x="190" y="130" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">BERT</text>
+                            
+                            <!-- Classification -->
+                            <rect x="240" y="90" width="40" height="30" rx="5" fill="rgba(34,197,94,0.1)" stroke="#22c55e" stroke-width="1.5"/>
+                            <text x="260" y="110" text-anchor="middle" fill="#22c55e" font-size="8" font-family="monospace">Pos</text>
+                            
+                            <rect x="240" y="130" width="40" height="30" rx="5" fill="rgba(255,0,122,0.1)" stroke="#ff007a" stroke-width="1.5"/>
+                            <text x="260" y="150" text-anchor="middle" fill="#ff007a" font-size="8" font-family="monospace">Neg</text>
+                            
+                            <!-- Arrows -->
+                            <line x1="70" y1="125" x2="90" y2="125" stroke="#22c55e" stroke-width="1.5" opacity="0.8"/>
+                            <line x1="140" y1="125" x2="160" y2="125" stroke="#22c55e" stroke-width="1.5" opacity="0.8"/>
+                            <line x1="220" y1="115" x2="240" y2="105" stroke="#22c55e" stroke-width="1.5" opacity="0.8"/>
+                            <line x1="220" y1="135" x2="240" y2="145" stroke="#ff007a" stroke-width="1.5" opacity="0.8"/>
+                            
+                            <!-- Agriculture Context -->
+                            <rect x="80" y="180" width="140" height="30" rx="5" fill="none" stroke="#22c55e" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>
+                            <text x="150" y="200" text-anchor="middle" fill="#22c55e" font-size="9" font-family="monospace" opacity="0.8">Agri-Domain Fine-tuned</text>
+                            <line x1="190" y1="150" x2="190" y2="180" stroke="#22c55e" stroke-width="1" stroke-dasharray="2,2" opacity="0.4"/>
+                            
+                            <text x="150" y="40" text-anchor="middle" fill="#64748b" font-size="10" font-family="monospace">Social Listening Pipeline</text>
+                        </svg>
+                    </div>
+                </div>
+                <div id="sentiment-details" class="deep-dive border-t border-green-500/10 bg-gray-900/30 p-8">
+                    <div class="text-sm text-gray-400 text-wrap-balance">
+                        <p class="mb-4"><strong class="text-green-400">Pipeline:</strong> Preprocessing: Tokenization → Stopword Removal → Lemmatization. </p>
+                        <p class="mb-4">Model: Fine-tuned BERT for agricultural domain sentiment (crop prices, weather, policies).</p>
+                        <p class="font-mono text-xs text-gray-500">Use case: Early warning systems for crop price volatility based on farmer sentiment analysis from social media and market data.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System 7: Legal OCR -->
+            <div class="glass-panel rounded-2xl overflow-hidden border border-orange-500/20 reveal-on-scroll">
+                <div class="grid lg:grid-cols-5">
+                    <div class="lg:col-span-3 p-8 border-b lg:border-b-0 lg:border-r border-orange-500/10 project-content">
+                        <div class="flex items-center gap-3 mb-2 flex-wrap">
+                            <span class="px-2 py-1 rounded bg-orange-500/10 text-orange-500 text-xs font-mono">LEGAL/HEALTHCARE</span>
+                            <span class="px-2 py-1 rounded bg-purple-500/10 text-purple-400 text-xs font-mono">OCR</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2 text-wrap-balance">Legal Document Intelligence</h3>
+                        <p class="text-sm text-gray-500 font-mono mb-4">K&S Partners • OCR-LLM • 2024</p>
+                        
+                        <p class="text-gray-400 mb-6 text-wrap-balance">
+                            Multimodal pipeline for legal/healthcare document processing. 
+                            Extracts structured data from PDFs using pdfplumber, Tesseract OCR, and Camelot. 
+                            RAG with Pinecone and LlamaIndex Q&A.
+                        </p>
+
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-orange-500/20">
+                                <div class="text-2xl font-bold text-orange-400">0.79</div>
+                                <div class="text-xs text-gray-500">BLEU</div>
+                            </div>
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-orange-500/20">
+                                <div class="text-2xl font-bold text-orange-400">75%</div>
+                                <div class="text-xs text-gray-500">Review Time ↓</div>
+                            </div>
+                            <div class="text-center p-3 bg-gray-800/50 rounded border border-orange-500/20">
+                                <div class="text-2xl font-bold text-orange-400">45%</div>
+                                <div class="text-xs text-gray-500">Latency ↓</div>
+                            </div>
+                        </div>
+                        
+                        <button onclick="toggleDeepDive('ocr-details')" class="text-orange-400 text-sm font-mono hover:underline flex items-center gap-2">
+                            <span>[+] View OCR Pipeline</span>
+                        </button>
+                    </div>
+                    <div class="lg:col-span-2 bg-gray-800/30 p-4 flex items-center justify-center border-l border-orange-500/10">
+                        <!-- OCR Architecture Diagram -->
+                        <svg viewBox="0 0 300 250" class="arch-diagram">
+                            <!-- PDF Input -->
+                            <rect x="20" y="110" width="40" height="30" rx="5" fill="rgba(249,115,22,0.1)" stroke="#f97316" stroke-width="1.5"/>
+                            <text x="40" y="130" text-anchor="middle" fill="#f97316" font-size="8" font-family="monospace">PDF</text>
+                            
+                            <!-- pdfplumber -->
+                            <rect x="80" y="100" width="50" height="25" rx="3" fill="rgba(249,115,22,0.15)" stroke="#f97316" stroke-width="1"/>
+                            <text x="105" y="117" text-anchor="middle" fill="#f97316" font-size="7" font-family="monospace">plumb</text>
+                            
+                            <!-- Tesseract -->
+                            <rect x="80" y="135" width="50" height="25" rx="3" fill="rgba(249,115,22,0.15)" stroke="#f97316" stroke-width="1"/>
+                            <text x="105" y="152" text-anchor="middle" fill="#f97316" font-size="7" font-family="monospace">tess</text>
+                            
+                            <!-- Camelot -->
+                            <rect x="80" y="170" width="50" height="25" rx="3" fill="rgba(249,115,22,0.15)" stroke="#f97316" stroke-width="1"/>
+                            <text x="105" y="187" text-anchor="middle" fill="#f97316" font-size="7" font-family="monospace">table</text>
+                            
+                            <!-- Structured Data -->
+                            <rect x="150" y="110" width="50" height="30" rx="5" fill="rgba(249,115,22,0.2)" stroke="#f97316" stroke-width="1.5"/>
+                            <text x="175" y="130" text-anchor="middle" fill="#f97316" font-size="8" font-family="monospace">JSON</text>
+                            
+                            <!-- Pinecone -->
+                            <rect x="220" y="90" width="50" height="30" rx="5" fill="rgba(112,0,255,0.1)" stroke="#7000ff" stroke-width="1.5"/>
+                            <text x="245" y="110" text-anchor="middle" fill="#7000ff" font-size="8" font-family="monospace">Vector</text>
+                            
+                            <!-- LLM -->
+                            <rect x="220" y="140" width="50" height="30" rx="5" fill="rgba(249,115,22,0.2)" stroke="#f97316" stroke-width="2"/>
+                            <text x="245" y="160" text-anchor="middle" fill="#f97316" font-size="9" font-family="monospace">LLM</text>
+                            
+                            <!-- Arrows -->
+                            <line x1="60" y1="125" x2="80" y2="112" stroke="#f97316" stroke-width="1" opacity="0.6"/>
+                            <line x1="60" y1="125" x2="80" y2="147" stroke="#f97316" stroke-width="1" opacity="0.8"/>
+                            <line x1="60" y1="125" x2="80" y2="182" stroke="#f97316" stroke-width="1" opacity="0.6"/>
+                            <line x1="130" y1="112" x2="150" y2="120" stroke="#f97316" stroke-width="1" opacity="0.6"/>
+                            <line x1="130" y1="147" x2="150" y2="125" stroke="#f97316" stroke-width="1.5" opacity="0.8"/>
+                            <line x1="130" y1="182" x2="150" y2="130" stroke="#f97316" stroke-width="1" opacity="0.6"/>
+                            <line x1="200" y1="120" x2="220" y2="105" stroke="#7000ff" stroke-width="1.5" opacity="0.8"/>
+                            <line x1="200" y1="125" x2="220" y2="155" stroke="#f97316" stroke-width="1.5" opacity="0.8"/>
+                            
+                            <!-- RAG connection -->
+                            <line x1="245" y1="120" x2="245" y2="140" stroke="#7000ff" stroke-width="1" stroke-dasharray="2,2" opacity="0.6"/>
+                            
+                            <text x="150" y="40" text-anchor="middle" fill="#64748b" font-size="9" font-family="monospace">Multimodal Document Processing</text>
+                        </svg>
+                    </div>
+                </div>
+                <div id="ocr-details" class="deep-dive border-t border-orange-500/10 bg-gray-900/30 p-8">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-orange-400 font-mono mb-4">// OCR Stack</h4>
+                            <ul class="space-y-2 text-sm text-gray-400 font-mono text-wrap-balance">
+                                <li>• pdfplumber: Text extraction from PDFs</li>
+                                <li>• Tesseract OCR: Image-based text recognition</li>
+                                <li>• Camelot: Table extraction and parsing</li>
+                                <li>• Pinecone: Vector storage for RAG</li>
+                                <li>• LlamaIndex: Query engine and indexing</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-orange-400 font-mono mb-4">// Processing Flow</h4>
+                            <p class="text-sm text-gray-400 text-wrap-balance">
+                                Documents → Parallel extraction (text, tables, OCR) → 
+                                Structured JSON → Embedding → Pinecone → 
+                                RAG-enhanced LLM Q&A for legal/healthcare queries.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Arsenal -->
+    <section id="expertise" class="py-32 relative bg-gray-900/30">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal-on-scroll">
+                <h2 class="text-sm font-bold text-cyan-400 tracking-widest uppercase mb-4">Technical Leadership</h2>
+                <h3 class="text-4xl font-bold mb-4 text-wrap-balance">Domain-Agnostic <span class="text-pink-500">Capabilities</span></h3>
+                <p class="text-gray-400 max-w-2xl mx-auto text-wrap-balance">
+                    Whether it's BFSI compliance, Healthcare HIPAA, or Oil & Gas safety critical systems, 
+                    I architect AI that respects domain constraints while pushing technical boundaries.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="glass-panel p-6 rounded-xl border border-cyan-400/20 reveal-on-scroll">
+                    <h4 class="text-cyan-400 font-mono text-sm mb-3">[SCALING]</h4>
+                    <ul class="space-y-2 text-sm text-gray-400 text-wrap-balance">
+                        <li>• Distributed Training (DDP/FSDP)</li>
+                        <li>• Model Quantization (INT8/INT4)</li>
+                        <li>• Vector DBs (FAISS/Pinecone)</li>
+                        <li>• Kubernetes Orchestration</li>
+                    </ul>
+                </div>
+
+                <div class="glass-panel p-6 rounded-xl border border-pink-500/20 reveal-on-scroll">
+                    <h4 class="text-pink-500 font-mono text-sm mb-3">[COMPLIANCE]</h4>
+                    <ul class="space-y-2 text-sm text-gray-400 text-wrap-balance">
+                        <li>• XAI/SHAP for BFSI Regulations</li>
+                        <li>• HIPAA (Healthcare Data)</li>
+                        <li>• SOC2/GDPR Standards</li>
+                        <li>• Model Audit Trails</li>
+                    </ul>
+                </div>
+
+                <div class="glass-panel p-6 rounded-xl border border-purple-500/20 reveal-on-scroll">
+                    <h4 class="text-purple-400 font-mono text-sm mb-3">[DOMAINS]</h4>
+                    <ul class="space-y-2 text-sm text-gray-400 text-wrap-balance">
+                        <li>• BFSI: Fraud/Risk Analytics</li>
+                        <li>• Healthcare: Clinical NLP</li>
+                        <li>• Manufacturing: IoT/edge AI</li>
+                        <li>• Agriculture: Computer Vision</li>
+                    </ul>
+                </div>
+
+                <div class="glass-panel p-6 rounded-xl border border-yellow-500/20 reveal-on-scroll">
+                    <h4 class="text-yellow-400 font-mono text-sm mb-3">[ARCHITECTURE]</h4>
+                    <ul class="space-y-2 text-sm text-gray-400 text-wrap-balance">
+                        <li>• Microservices (FastAPI/gRPC)</li>
+                        <li>• Event-Driven (Kafka)</li>
+                        <li>• CQRS/Event Sourcing</li>
+                        <li>• Multi-tenant SaaS</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-32 relative">
+        <div class="max-w-4xl mx-auto px-6 text-center reveal-on-scroll">
+            <h2 class="text-4xl font-bold mb-6 text-wrap-balance">Build Your Domain's <span class="text-cyan-400">AI Future</span></h2>
+            <p class="text-xl text-gray-400 mb-12 text-wrap-balance">
+                Seeking CTO/VP Engineering roles or Technical Founder partnerships. 
+                I bring cross-domain AI architecture expertise to your industry.
+            </p>
+
+            <div class="glass-panel rounded-2xl p-8 max-w-2xl mx-auto border border-cyan-400/20">
+                <div class="grid md:grid-cols-2 gap-8 mb-8 text-left font-mono text-sm">
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-envelope text-cyan-400 w-6"></i>
+                            <span>kumardilip218@gmail.com</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-phone text-cyan-400 w-6"></i>
+                            <span>+91-7905618273</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-map-marker-alt text-cyan-400 w-6"></i>
+                            <span>Bangalore, India</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-gray-300">
+                            <i class="fas fa-graduation-cap text-cyan-400 w-6"></i>
+                            <span>M.Tech IIIT Delhi</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center gap-6">
+                    <a href="#" class="w-12 h-12 glass-panel rounded-full flex items-center justify-center text-cyan-400 hover:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 glass-panel rounded-full flex items-center justify-center text-cyan-400 hover:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-8 border-t border-gray-800 text-center text-gray-600 text-sm font-mono">
+        <p>© 2025 Dilip Kumar Yadav • Principal AI Architect • Cross-Domain Technical Leadership</p>
+    </footer>
+
+    <script>
+        // Cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+            
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
+        });
+
+        // Three.js Background
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 1000;
+        const posArray = new Float32Array(particlesCount * 3);
+        
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 50;
+        }
+        
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.05,
+            color: 0x00f0ff,
+            transparent: true,
+            opacity: 0.5
+        });
+
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+        camera.position.z = 30;
+
+        let mouseX = 0;
+        let mouseY = 0;
+        document.addEventListener('mousemove', (event) => {
+            mouseX = event.clientX / window.innerWidth - 0.5;
+            mouseY = event.clientY / window.innerHeight - 0.5;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            particlesMesh.rotation.y += 0.001;
+            particlesMesh.rotation.x += 0.001;
+            particlesMesh.rotation.x += mouseY * 0.05;
+            particlesMesh.rotation.y += mouseX * 0.05;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Toggle Deep Dives
+        function toggleDeepDive(id) {
+            const element = document.getElementById(id);
+            element.classList.toggle('active');
+            const btn = event.currentTarget;
+            const span = btn.querySelector('span');
+            if (element.classList.contains('active')) {
+                span.textContent = span.textContent.replace('[+]', '[-]').replace('View', 'Hide');
+            } else {
+                span.textContent = span.textContent.replace('[-]', '[+]').replace('Hide', 'View');
+            }
+        }
+
+        // GSAP
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.utils.toArray('.reveal-on-scroll').forEach((element) => {
+            gsap.fromTo(element, 
+                { opacity: 0, y: 50 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    scrollTrigger: {
+                        trigger: element,
+                        start: 'top 85%',
+                    }
+                }
+            );
+        });
+
+        // Counters
+        gsap.utils.toArray('.counter').forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            gsap.to(counter, {
+                innerHTML: target,
+                duration: 2,
+                snap: { innerHTML: 1 },
+                scrollTrigger: { trigger: counter, start: "top 85%" }
+            });
+        });
+
+        // Typing Effect
+        const words = ["BFSI", "Healthcare", "Logistics", "Agriculture", "Manufacturing", "Energy"];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingElement = document.getElementById('typing-text');
+
+        function typeWriter() {
+            const currentWord = words[wordIndex];
+            
+            if (isDeleting) {
+                typingElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeWriter, typeSpeed);
+        }
+        typeWriter();
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Resize handler for architecture diagrams
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
